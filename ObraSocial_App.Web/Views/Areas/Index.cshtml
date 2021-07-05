@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "Areas";
+}
+
+<h1>Areas</h1>
+
+<ul>
+    @foreach (Areas A in ViewBag.Areas)
+    {
+    <li> @A.nombre</li>
+    }
+
+</ul>
+
+
+
