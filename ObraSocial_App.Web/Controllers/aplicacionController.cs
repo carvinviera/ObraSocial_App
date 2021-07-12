@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dato.ModelsAcceso;
+using Dato.ModelsAcceso.Entities;
 
 namespace ObraSocial_App.Web.Controllers
 {

@@ -32,7 +32,7 @@ namespace ObraSocial_App.Web
     using Microsoft.AspNetCore;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Dato.ModelsAcceso;
+    using Dato.ModelsAcceso.Entities;
     using Microsoft.AspNetCore.Hosting;
 
     public class Program

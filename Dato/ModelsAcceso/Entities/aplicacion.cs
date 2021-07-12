@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Dato.ModelsAcceso;
-
-namespace Dato.ModelsAcceso
+﻿
+namespace Dato.ModelsAcceso.Entities
 {
+
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Text;
+
     [Table("aplicacion")]
     public partial class aplicacion
     {

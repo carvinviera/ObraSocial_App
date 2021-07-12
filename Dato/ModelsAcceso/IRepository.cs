@@ -1,4 +1,4 @@
-﻿namespace Dato.ModelsAcceso
+﻿namespace Dato.ModelsAcceso.Entities
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

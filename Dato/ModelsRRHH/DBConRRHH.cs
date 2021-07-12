@@ -1,6 +1,4 @@
-﻿
-
-namespace Dato.ModelsRRHH
+﻿namespace Dato.ModelsRRHH
 {
     using System;
     using Microsoft.EntityFrameworkCore;
