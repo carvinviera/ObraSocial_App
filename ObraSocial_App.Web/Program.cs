@@ -29,11 +29,12 @@
 
 namespace ObraSocial_App.Web
 {
-    using Microsoft.AspNetCore;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.DependencyInjection;
     using Dato.ModelsAcceso.Entities;
+    using Dato.ModelsCore;
+    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
 
     public class Program
     {
@@ -41,6 +42,7 @@ namespace ObraSocial_App.Web
         {
             var host = CreateWebHostBuilder(args).Build();
             RunSeeding(host);
+            RunSeeding2(host);
             host.Run();
         }
 
@@ -54,9 +56,19 @@ namespace ObraSocial_App.Web
             }
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>();
+        private static void RunSeeding2(IWebHost host)
+        {
+            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetService<SeedDbCoreInDato>();
+                seeder.SeedDbCoreInDatoAsync().Wait();
+            }
+        }
 
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+        }
     }
 }

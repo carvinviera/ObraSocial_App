@@ -15,11 +15,7 @@
 
 namespace Dato.ModelsAcceso.Entities
 {
-    using System;
     using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Text;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class DBConAcceso : DbContext
     {

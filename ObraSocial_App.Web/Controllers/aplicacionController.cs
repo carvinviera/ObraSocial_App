@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dato.ModelsAcceso;
 using Dato.ModelsAcceso.Entities;
+using Business;
 
 namespace ObraSocial_App.Web.Controllers
 {
@@ -13,14 +14,21 @@ namespace ObraSocial_App.Web.Controllers
     {
         //private DBConAcceso db; se quito para inyectar repo y no el dbcontext
         //public aplicacionController(DBConAcceso _context) { db = _context; }se quito para inyectar repo y no el dbcontext
-        private readonly IRepository repository; // se inyecta el repo
-        public aplicacionController(IRepository repository) {
-            this.repository = repository;
-        } // se inyecta el repo
+        //private readonly IRepository repository; // se inyecta el repo   //se quita para inyectar el business
+        private readonly aplicacionBusiness _aplicacionBusiness; // se inyecta el business
+        //public aplicacionController(IRepository repository) {
+        //    this.repository = repository;
+        //} // se inyecta el repo    //se quita para inyectar el business
+
+        public aplicacionController(aplicacionBusiness _aplicacionBusiness)
+        {
+            this._aplicacionBusiness = _aplicacionBusiness;
+        } // se inyecta el business
         public IActionResult Index()
         {
-            //ViewBag.Aplicacion = this.repository.GetAplicacions();
-            IEnumerable<aplicacion> apl = this.repository.GetAplicacions();
+            //ViewBag.Aplicacion = this.repository.GetAplicacions();  se cambia para usar el repo
+            //IEnumerable<aplicacion> apl = this.repository.GetAplicacions(); se cambia para usar el business
+            IEnumerable<aplicacion> apl = this._aplicacionBusiness.GetAplicacions();
             return View(apl);
         }
 
@@ -32,7 +40,7 @@ namespace ObraSocial_App.Web.Controllers
             //    return NotFound(); 
             //}
 
-            var _aplicacion = this.repository.GetAplicacion(id);
+            var _aplicacion = this._aplicacionBusiness.GetAplicacion(id);
             if (_aplicacion == null)
             {
                 return NotFound();
@@ -56,8 +64,8 @@ namespace ObraSocial_App.Web.Controllers
             //{
                 if (ModelState.IsValid)
                 {
-                    this.repository.AddAplicacion(_aplicacion);
-                    await this.repository.SaveAllAsync();
+                    this._aplicacionBusiness.AddAplicacion(_aplicacion);
+                    await this._aplicacionBusiness.SaveAllAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 return View(_aplicacion);
@@ -76,7 +84,7 @@ namespace ObraSocial_App.Web.Controllers
             //    return NotFound();
             //}
 
-            var _aplicacion = this.repository.GetAplicacion(id);
+            var _aplicacion = this._aplicacionBusiness.GetAplicacion(id);
             if (_aplicacion == null)
             {
                 return NotFound();
@@ -95,12 +103,12 @@ namespace ObraSocial_App.Web.Controllers
             {
                 try
                 {
-                    this.repository.UpdateAplicacion(aplicacion);
-                    await this.repository.SaveAllAsync();
+                    this._aplicacionBusiness.UpdateAplicacion(aplicacion);
+                    await this._aplicacionBusiness.SaveAllAsync();
                 }
                 catch
                 {
-                    if (!this.repository.AplicacionExists(aplicacion.id))
+                    if (!this._aplicacionBusiness.AplicacionExists(aplicacion.id))
                     {
                         return NotFound();
                     }
@@ -123,7 +131,7 @@ namespace ObraSocial_App.Web.Controllers
             //    return NotFound();
             //}
 
-            var aplicacion = this.repository.GetAplicacion(id);
+            var aplicacion = this._aplicacionBusiness.GetAplicacion(id);
             if (aplicacion == null)
             {
                 return NotFound();
@@ -137,9 +145,9 @@ namespace ObraSocial_App.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var aplicacion = this.repository.GetAplicacion(id);
-            this.repository.RemoveAplicacion(aplicacion);
-            await this.repository.SaveAllAsync();
+            var aplicacion = this._aplicacionBusiness.GetAplicacion(id);
+            this._aplicacionBusiness.RemoveAplicacion(aplicacion);
+            await this._aplicacionBusiness.SaveAllAsync();
             return RedirectToAction(nameof(Index));
         }
     }

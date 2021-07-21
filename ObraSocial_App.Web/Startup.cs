@@ -1,22 +1,19 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dato.ModelsRRHH;
-using Dato.ModelsAcceso.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
-using ObraSocial_App.Web.Data;
-
 namespace ObraSocial_App.Web
 {
+    using Business;
+    using Dato.ModelsAcceso.Entities;
+    using Dato.ModelsCore;
+    using Dato.ModelsCore.Entities;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -29,29 +26,34 @@ namespace ObraSocial_App.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddIdentity<ActiveDiretoryUsers, IdentityRole>(cfg =>
-            //{
-            //    cfg.User.RequireUniqueEmail = true;
-            //    cfg.Password.RequireDigit = false;
-            //    cfg.Password.RequiredUniqueChars = 0;
-            //    cfg.Password.RequireLowercase = false;
-            //    cfg.Password.RequireNonAlphanumeric = false;
-            //    cfg.Password.RequireUppercase = false;
-            //    cfg.Password.RequireDigit = false;
-            //    cfg.Password.RequiredLength = 6;
-            //});
+            services.AddIdentity<User, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = false;
+                cfg.Password.RequireNonAlphanumeric = false;
+                cfg.Password.RequireUppercase = false;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredLength = 6;
+            }).AddEntityFrameworkStores<DataContextCore>();
+
             services.AddControllersWithViews();
-            services.AddDbContext<DataContext>(cfg => cfg.UseSqlServer(this.Configuration.GetConnectionString("osdopCoreEntities"))); //agregado de conexion string rrhh 
-            services.AddDbContext<DBConRRHH>(options => options.UseSqlServer(Configuration.GetConnectionString("osdoprrhhEntities"))); //agregado de conexion string rrhh 
+            services.AddMvc();
+            services.AddDbContext<DataContextCore>(cfg => cfg.UseSqlServer(Configuration.GetConnectionString("dbOsdopCoreEntities")));
+            //services.AddDbContext<DBConRRHH>(options => options.UseSqlServer(Configuration.GetConnectionString("osdoprrhhEntities"))); //agregado de conexion string rrhh 
             services.AddDbContext<DBConAcceso>(options => options.UseSqlServer(Configuration.GetConnectionString("accesoEntities")));//agregado de conexion string acceso
 
             services.AddTransient<SeedDb>();
+            services.AddTransient<SeedDbCoreInDato>();
 
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<aplicacionBusiness>();
             //services.AddScoped<IRepository, MockRepository>(); //se la interfaz para cambiar rapidamente entre repositorios Quizas uno de prueba y
             //luego el real... o para pruebas unitarias
 
-            services.Configure<CookiePolicyOptions>(options => {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });

@@ -1,11 +1,9 @@
-﻿
-namespace ObraSocial_App.Web.Data.Entities
+﻿namespace Dato.ModelsCore.Entities
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    public class ProducPruebaCore
+    public class ProductosPruebaCore
     {
         [Key]
         public int Id { get; set; }
@@ -21,7 +19,7 @@ namespace ObraSocial_App.Web.Data.Entities
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }
 
-     
+
         [Display(Name = "Last Purchase")]
         [Column(TypeName = "DateTime")]
         public DateTime? LastPurchase { get; set; }
@@ -36,6 +34,8 @@ namespace ObraSocial_App.Web.Data.Entities
 
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public double Stock { get; set; }
+
+        public User User { get; set; } //configurando una propiedad de 1 a varios  1 usuario tiene muchos productos+
 
 
     }
