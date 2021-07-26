@@ -1,5 +1,3 @@
-using System;
-
 namespace ObraSocial_App.Web.Models
 {
     public class ErrorViewModel

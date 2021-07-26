@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Dato\Dato.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Products\" />
+  </ItemGroup>
+
 </Project>
