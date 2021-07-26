@@ -1,19 +1,28 @@
 ﻿namespace Dato.ModelsAcceso.Entities
 {
+    using Dato.ModelsCore;
+    using Dato.ModelsCore.Entities;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     public class Repository : IRepository
     {
         private readonly DBConAcceso db;
-        public Repository(DBConAcceso db)
+        private readonly DataContextCore contextCore;
+        public Repository(DBConAcceso db, DataContextCore contextCore)
         {
             this.db = db;
+            this.contextCore = contextCore;
         }
 
         public IEnumerable<aplicacion> GetAplicacions()
         {
             return this.db.aplicacion.OrderBy(p => p.id);
+        }
+
+        public IEnumerable<ProductosPruebaCore> GetProducts()
+        {
+            return this.contextCore.ProductosPruebaCores.OrderBy(p => p.Id);
         }
 
         public aplicacion GetAplicacion(int id)
@@ -44,6 +53,8 @@
         {
             return this.db.aplicacion.Any(p => p.id == id);
         }
+
+        
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿namespace Dato.ModelsAcceso.Entities
 {
+    using Dato.ModelsCore.Entities;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     public interface IRepository
@@ -9,6 +10,8 @@
         bool AplicacionExists(int id);
 
         aplicacion GetAplicacion(int id);
+
+        IEnumerable<ProductosPruebaCore> GetProducts();
 
         IEnumerable<aplicacion> GetAplicacions();
 

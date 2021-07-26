@@ -1,6 +1,7 @@
 namespace ObraSocial_App.Web
 {
     using Business;
+    using Dato.Helper;
     using Dato.ModelsAcceso.Entities;
     using Dato.ModelsCore;
     using Dato.ModelsCore.Entities;
@@ -47,7 +48,11 @@ namespace ObraSocial_App.Web
             services.AddTransient<SeedDb>();
             services.AddTransient<SeedDbCoreInDato>();
 
-            services.AddScoped<IRepository, Repository>();
+
+            services.AddScoped<IRepository, Repository>(); //  por ahora se deja usa las otras tablas que estan en las bases internas de osdop
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<aplicacionBusiness>();
             //services.AddScoped<IRepository, MockRepository>(); //se la interfaz para cambiar rapidamente entre repositorios Quizas uno de prueba y
             //luego el real... o para pruebas unitarias

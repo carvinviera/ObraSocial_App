@@ -1,6 +1,4 @@
-﻿
-
-namespace Dato.ModelsCore
+﻿namespace Dato.ModelsCore
 {
     using Microsoft.EntityFrameworkCore;
     using Entities;
@@ -9,6 +7,7 @@ namespace Dato.ModelsCore
     public class DataContextCore : IdentityDbContext<User>
     {
         public DbSet<ProductosPruebaCore> ProductosPruebaCores { get; set; }
+        public DbSet<Country> Countries { get; set; }
         //public DbSet<User> Users { get; set; }
         public DataContextCore(DbContextOptions<DataContextCore> options) : base(options)
         {
